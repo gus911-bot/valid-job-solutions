@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { HtmlLangSync } from '@/components/i18n/HtmlLangSync';
 import { Navbar } from '@/components/sections/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { WhatsAppButton } from '@/components/sections/WhatsAppButton';
@@ -48,6 +49,7 @@ export default function LangLayout({
 
   return (
     <>
+      <HtmlLangSync locale={locale} />
       <Navbar dict={dict} locale={locale} />
       <main>{children}</main>
       <Footer dict={dict} locale={locale} />

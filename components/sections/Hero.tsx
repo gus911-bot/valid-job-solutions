@@ -52,7 +52,7 @@ export function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
         initial={{ opacity: 0, scale: 0.85 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.5, duration: 1, ease: 'easeOut' }}
-        className="pointer-events-none absolute right-[14%] top-[32%] z-10 hidden -translate-y-1/2 lg:block"
+        className="pointer-events-none absolute end-[8%] top-[32%] z-10 hidden -translate-y-1/2 lg:block"
       >
         <Image
           src="/nb.png"
@@ -82,7 +82,7 @@ export function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           {titleWords.map((w, i) => (
             <span
               key={i}
-              className="inline-block overflow-hidden align-bottom"
+              className="inline-block overflow-hidden pb-[0.18em] align-bottom"
             >
               <motion.span
                 variants={word}
