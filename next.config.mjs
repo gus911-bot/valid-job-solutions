@@ -34,8 +34,9 @@ const securityHeaders = [
 
 const nextConfig = {
   reactStrictMode: true,
-  // Sortie autonome : image Docker minimale (ne copie que le strict nécessaire).
-  output: 'standalone',
+  // Sortie autonome pour Docker uniquement. Sur Vercel (build natif), on laisse
+  // la valeur par défaut — `standalone` peut perturber le bundling des fonctions.
+  output: process.env.VERCEL ? undefined : 'standalone',
   poweredByHeader: false,
   compress: true,
   images: {
