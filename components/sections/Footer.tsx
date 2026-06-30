@@ -120,7 +120,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook Ben Hazez Marwen" className="transition hover:text-gold">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram Ben Hazez Marwen" className="transition hover:text-gold">
+              <a href="https://www.instagram.com/valid_jobsolutions" target="_blank" rel="noopener noreferrer" aria-label="Instagram Valid Job Solutions" className="transition hover:text-gold">
                 <Instagram className="h-5 w-5" />
               </a>
               <span className="text-xs text-cream/60">Ben Hazez Marwen</span>

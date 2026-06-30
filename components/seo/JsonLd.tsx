@@ -38,6 +38,11 @@ const jsonLd = {
     { '@type': 'Place', name: 'Europe' },
   ],
   knowsLanguage: ['fr', 'ar', 'en'],
+  sameAs: [
+    'https://www.instagram.com/valid_jobsolutions',
+    'https://www.google.com/maps?cid=4335862039483113036',
+  ],
+  hasMap: 'https://www.google.com/maps?cid=4335862039483113036',
   slogan: 'Nous ne nous contentons pas de recruter… nous révélons le potentiel humain.',
 };
 

@@ -51,5 +51,7 @@ export const AGENCY_MAP_EMBED =
   `!3m3!1m2!1s0x0%3A0x0!2sValid%20Job%20Solutions` +
   `!5e0!3m2!1sfr!2stn!4v1700000000000!5m2!1sfr!2stn`;
 
-// Lien « Itinéraire » (ouvre la navigation Google Maps vers les coordonnées).
+// Fiche Google Business officielle (CID dérivé du place ID).
+export const AGENCY_PLACE_URL = 'https://www.google.com/maps?cid=4335862039483113036';
+// Lien « Itinéraire » : itinéraire Google Maps vers les coordonnées de l'agence.
 export const AGENCY_DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${AGENCY_LAT},${AGENCY_LNG}`;
