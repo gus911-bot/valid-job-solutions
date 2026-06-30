@@ -81,7 +81,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
             alt="Ben Hazez Marwen — Valid Job Solutions"
             width={743}
             height={519}
-            className="mt-6 w-full max-w-xs rounded-2xl border border-gold/20 shadow-soft"
+            className="mt-6 w-full max-w-md rounded-2xl border border-gold/20 shadow-soft"
           />
 
           <p className="mt-4 flex items-center gap-2 text-sm text-cream/70">
