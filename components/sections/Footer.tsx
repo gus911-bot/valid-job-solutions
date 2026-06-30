@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Phone,
   MessageCircle,
@@ -73,6 +74,16 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           <p className="mt-5 max-w-sm font-script text-lg italic text-gold/90">
             {dict.hero.quote}
           </p>
+
+          {/* Carte signature du fondateur */}
+          <Image
+            src="/cg.jpeg"
+            alt="Ben Hazez Marwen — Valid Job Solutions"
+            width={743}
+            height={519}
+            className="mt-6 w-full max-w-xs rounded-2xl border border-gold/20 shadow-soft"
+          />
+
           <p className="mt-4 flex items-center gap-2 text-sm text-cream/70">
             <TnFlag /> Tunisie <span className="text-gold">+</span> Europe{' '}
             <EuFlag />
