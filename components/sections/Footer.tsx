@@ -113,8 +113,8 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           </h3>
           <ul className="space-y-3 text-sm text-cream/80">
             <li>
-              <a href={`tel:${CONTACT_PHONE_TEL}`} dir="ltr" className="flex items-center gap-2 transition hover:text-gold">
-                <Phone className="h-4 w-4 text-gold" /> {CONTACT_PHONE}
+              <a href={`tel:${CONTACT_PHONE_TEL}`} className="flex items-center gap-2 transition hover:text-gold">
+                <Phone className="h-4 w-4 text-gold" /> <bdi>{CONTACT_PHONE}</bdi>
               </a>
             </li>
             <li>
