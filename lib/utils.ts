@@ -34,6 +34,8 @@ export const WHATSAPP_NUMBER = '21623529938';
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 export const CONTACT_EMAIL = 'validjobsolution@gmail.com';
 export const CONTACT_PHONE = '98 735 633';
+// Format international pour les liens tel: (indicatif Tunisie +216).
+export const CONTACT_PHONE_TEL = '+21698735633';
 
 // ───────── Localisation de l'agence ─────────
 // ⚠️ Remplacez par l'adresse + les coordonnées exactes de Valid Job Solutions.

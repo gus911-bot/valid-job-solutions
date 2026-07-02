@@ -14,6 +14,7 @@ import {
   WHATSAPP_URL,
   CONTACT_EMAIL,
   CONTACT_PHONE,
+  CONTACT_PHONE_TEL,
   AGENCY_ADDRESS,
   AGENCY_MAP_EMBED,
   AGENCY_DIRECTIONS_URL,
@@ -112,7 +113,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           </h3>
           <ul className="space-y-3 text-sm text-cream/80">
             <li>
-              <a href={`tel:${CONTACT_PHONE.replace(/\s/g, '')}`} className="flex items-center gap-2 transition hover:text-gold">
+              <a href={`tel:${CONTACT_PHONE_TEL}`} dir="ltr" className="flex items-center gap-2 transition hover:text-gold">
                 <Phone className="h-4 w-4 text-gold" /> {CONTACT_PHONE}
               </a>
             </li>
