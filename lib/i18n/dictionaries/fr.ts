@@ -9,7 +9,7 @@ export const fr = {
     cta: 'Réserver un entretien',
   },
   hero: {
-    badge: 'Tunisie + Europe',
+    badge: 'Tunisie + Europe + Canada',
     title: ['Révélons', 'votre', 'potentiel', 'professionnel'],
     subtitle:
       "Des talents vers des opportunités professionnelles concrètes à l'international. Nous identifions, préparons et propulsons votre carrière.",

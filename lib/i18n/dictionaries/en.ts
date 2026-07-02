@@ -10,7 +10,7 @@ export const en: Dictionary = {
     cta: 'Book an interview',
   },
   hero: {
-    badge: 'Tunisia + Europe',
+    badge: 'Tunisia + Europe + Canada',
     title: ['Reveal', 'your', 'professional', 'potential'],
     subtitle:
       'Talent matched to real professional opportunities abroad. We identify, prepare and propel your career.',

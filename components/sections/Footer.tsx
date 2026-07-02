@@ -10,7 +10,6 @@ import {
   Navigation,
 } from 'lucide-react';
 import { Logo } from '@/components/ui/Logo';
-import { TnFlag, EuFlag } from '@/components/ui/Flags';
 import {
   WHATSAPP_URL,
   CONTACT_EMAIL,
@@ -84,9 +83,9 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
             className="mt-6 w-full max-w-xl rounded-2xl border border-gold/20 shadow-soft"
           />
 
-          <p className="mt-4 flex items-center gap-2 text-sm text-cream/70">
-            <TnFlag /> Tunisie <span className="text-gold">+</span> Europe{' '}
-            <EuFlag />
+          <p className="mt-4 text-sm text-cream/70">
+            Tunisie <span className="text-gold">+</span> Europe{' '}
+            <span className="text-gold">+</span> Canada
           </p>
         </div>
 

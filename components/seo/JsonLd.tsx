@@ -36,6 +36,7 @@ const jsonLd = {
   areaServed: [
     { '@type': 'Country', name: 'Tunisie' },
     { '@type': 'Place', name: 'Europe' },
+    { '@type': 'Country', name: 'Canada' },
   ],
   knowsLanguage: ['fr', 'ar', 'en'],
   sameAs: [

@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, Compass } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { TnFlag, EuFlag } from '@/components/ui/Flags';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -70,7 +69,7 @@ export function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           transition={{ duration: 0.6 }}
           className="mb-6 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-1.5 text-sm text-cream"
         >
-          <TnFlag /> {dict.hero.badge} <EuFlag />
+          {dict.hero.badge}
         </motion.div>
 
         <motion.h1
