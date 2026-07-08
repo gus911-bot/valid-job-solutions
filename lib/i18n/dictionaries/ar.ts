@@ -153,5 +153,22 @@ export const ar: Dictionary = {
       preparation_entretien: 'التحضير للمقابلات',
       consultation: 'استشارة عامة',
     },
+    payment: {
+      title: 'إتمام الدفع',
+      subtitle: 'ادفع عبر إحدى هذه الوسائل، ثم أرسل لنا الإيصال عبر واتساب.',
+      holder: 'صاحب الحساب',
+      rib: 'RIB',
+      iban: 'IBAN',
+      number: 'الرقم',
+      copy: 'نسخ',
+      copied: 'تم النسخ',
+      note: 'يؤكّد فريقنا المبلغ حسب الخدمة المختارة.',
+      whatsapp: 'أرسل الإيصال عبر واتساب',
+      methods: {
+        biat: 'تحويل بنكي — BIAT',
+        wafacash: 'Wafacash',
+        zitouna: 'Izi / بنك الزيتونة',
+      },
+    },
   },
 };

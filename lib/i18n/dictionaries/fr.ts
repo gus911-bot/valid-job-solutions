@@ -158,6 +158,24 @@ export const fr = {
       preparation_entretien: 'Préparation aux entretiens',
       consultation: 'Consultation générale',
     },
+    payment: {
+      title: 'Finaliser votre paiement',
+      subtitle:
+        "Réglez via l'un de ces moyens, puis envoyez-nous le reçu sur WhatsApp.",
+      holder: 'Titulaire',
+      rib: 'RIB',
+      iban: 'IBAN',
+      number: 'Numéro',
+      copy: 'Copier',
+      copied: 'Copié',
+      note: 'Le montant vous est confirmé par notre équipe selon le service choisi.',
+      whatsapp: 'Envoyer le reçu sur WhatsApp',
+      methods: {
+        biat: 'Virement bancaire — BIAT',
+        wafacash: 'Wafacash',
+        zitouna: 'Izi / Banque Zitouna',
+      },
+    },
   },
 };
 
