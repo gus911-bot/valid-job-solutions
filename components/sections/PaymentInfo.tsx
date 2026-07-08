@@ -33,9 +33,9 @@ export function PaymentInfo({ dict }: { dict: Dictionary }) {
                 <Image
                   src={m.logo}
                   alt={t.methods[m.id]}
-                  width={120}
-                  height={40}
-                  className="h-8 w-auto object-contain"
+                  width={160}
+                  height={48}
+                  className="h-11 w-auto rounded-md bg-white/95 object-contain p-1"
                 />
               ) : (
                 <span className="inline-flex items-center gap-2 font-semibold text-cream">
@@ -54,15 +54,15 @@ export function PaymentInfo({ dict }: { dict: Dictionary }) {
                 return (
                   <div key={id}>
                     <p className="text-[11px] uppercase text-muted">{t[f.key]}</p>
-                    <div className="flex items-center justify-between gap-2 rounded-lg bg-surface-300 px-3 py-2">
-                      <bdi className="truncate text-sm font-medium text-cream" dir="ltr">
+                    <div className="flex items-start justify-between gap-2 rounded-lg bg-surface-300 px-3 py-2">
+                      <bdi className="break-all text-sm font-medium text-cream" dir="ltr">
                         {f.value}
                       </bdi>
                       <button
                         type="button"
                         onClick={() => copy(id, f.value)}
                         aria-label={t.copy}
-                        className="shrink-0 rounded-md p-1 text-gold transition hover:bg-gold/10"
+                        className="mt-0.5 shrink-0 rounded-md p-1 text-gold transition hover:bg-gold/10"
                       >
                         {copied === id ? (
                           <Check className="h-4 w-4 text-emerald-400" />
