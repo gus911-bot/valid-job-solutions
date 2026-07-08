@@ -29,12 +29,12 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   },
   {
     id: 'wafacash',
-    logo: '/wafacash.png',
+    logo: '/wafacash.jpg',
     fields: [{ key: 'number', value: '23 529 938' }],
   },
   {
     id: 'zitouna',
-    // logo: '/zitouna.png',  // à ajouter quand le logo Zitouna sera fourni
+    logo: '/izi.png',
     fields: [{ key: 'number', value: '23 529 938' }],
   },
 ];
