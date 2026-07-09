@@ -1,9 +1,25 @@
 // Layout de l'espace admin. Le middleware protège déjà /admin/**,
 // mais on revérifie ici (défense en profondeur) sauf sur la page login.
+import type { Metadata, Viewport } from 'next';
 import { AdminHeader } from '@/components/admin/AdminHeader';
+import { PwaRegister } from '@/components/admin/PwaRegister';
 import { createClient } from '@/lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
+
+// Espace admin installable en application (PWA) — uniquement pour l'espace admin.
+export const metadata: Metadata = {
+  title: 'Valid Job — Admin',
+  manifest: '/admin.webmanifest',
+  appleWebApp: {
+    capable: true,
+    title: 'VJ Admin',
+    statusBarStyle: 'black-translucent',
+  },
+  icons: { apple: '/apple-touch-icon.png' },
+};
+
+export const viewport: Viewport = { themeColor: '#0C100E' };
 
 export default async function AdminLayout({
   children,
@@ -25,6 +41,7 @@ export default async function AdminLayout({
   // La page /admin/login a son propre rendu plein écran (pas de header).
   return (
     <div className="min-h-screen bg-background">
+      <PwaRegister />
       {email && <AdminHeader email={email} />}
       {children}
     </div>
