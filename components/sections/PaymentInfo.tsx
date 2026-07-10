@@ -24,7 +24,7 @@ export function PaymentInfo({ dict }: { dict: Dictionary }) {
         <p className="mt-1 text-sm text-muted">{t.subtitle}</p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {PAYMENT_METHODS.map((m) => (
           <div key={m.id} className="flex flex-col gap-3 rounded-xl border border-line bg-surface-200 p-4">
             {/* En-tête : logo ou nom */}

@@ -168,6 +168,7 @@ export const ar: Dictionary = {
         biat: 'تحويل بنكي — BIAT',
         wafacash: 'Wafacash',
         zitouna: 'Izi / بنك الزيتونة',
+        d17: 'D17',
       },
     },
   },

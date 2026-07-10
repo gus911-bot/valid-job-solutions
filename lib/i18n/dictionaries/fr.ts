@@ -174,6 +174,7 @@ export const fr = {
         biat: 'Virement bancaire — BIAT',
         wafacash: 'Wafacash',
         zitouna: 'Izi / Banque Zitouna',
+        d17: 'D17',
       },
     },
   },

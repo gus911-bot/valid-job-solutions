@@ -174,6 +174,7 @@ export const en: Dictionary = {
         biat: 'Bank transfer — BIAT',
         wafacash: 'Wafacash',
         zitouna: 'Izi / Zitouna Bank',
+        d17: 'D17',
       },
     },
   },

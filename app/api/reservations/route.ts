@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { reservationSchema } from '@/lib/validations/reservation';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { rateLimit, getClientIp } from '@/lib/rate-limit';
+import { sendPushToAll } from '@/lib/push';
 import {
   CV_ACCEPTED,
   CV_MAX_BYTES,
@@ -146,6 +147,20 @@ export async function POST(request: Request) {
       { status: 500 },
     );
   }
+
+  // 7. Notifier l'admin (best-effort, ne bloque pas la réponse).
+  const serviceLabels: Record<string, string> = {
+    coaching_cv: 'Coaching CV',
+    preparation_entretien: 'Préparation entretien',
+    consultation: 'Consultation',
+  };
+  await sendPushToAll({
+    title: 'Nouvelle réservation 🎯',
+    body: `${data.full_name} — ${serviceLabels[data.service] ?? data.service}${
+      data.target_country ? ' · ' + data.target_country : ''
+    }`,
+    url: '/admin',
+  }).catch(() => {});
 
   return NextResponse.json({ ok: true }, { status: 201 });
 }
