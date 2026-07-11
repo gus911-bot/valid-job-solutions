@@ -3,24 +3,27 @@ import { ReservationForm } from '@/components/sections/ReservationForm';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
-  params: { lang: string };
-}): Metadata {
-  const locale = (isLocale(params.lang) ? params.lang : 'fr') as Locale;
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const locale = (isLocale(lang) ? lang : 'fr') as Locale;
   const dict = getDictionary(locale);
   return { title: dict.reservation.title, description: dict.reservation.subtitle };
 }
 
-export default function ReservationPage({
+export default async function ReservationPage({
   params,
   searchParams,
 }: {
-  params: { lang: string };
-  searchParams: { service?: string };
+  params: Promise<{ lang: string }>;
+  searchParams: Promise<{ service?: string }>;
 }) {
-  const locale = (isLocale(params.lang) ? params.lang : 'fr') as Locale;
+  const { lang } = await params;
+  const { service } = await searchParams;
+  const locale = (isLocale(lang) ? lang : 'fr') as Locale;
   const dict = getDictionary(locale);
 
   return (
@@ -36,7 +39,7 @@ export default function ReservationPage({
           </p>
         </div>
 
-        <ReservationForm dict={dict} initialService={searchParams.service} />
+        <ReservationForm dict={dict} initialService={service} />
       </div>
     </section>
   );

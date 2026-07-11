@@ -8,7 +8,7 @@ export const metadata = { title: 'Dashboard' };
 
 // Server Component : la RLS garantit que seul un admin récupère les lignes.
 export default async function AdminDashboardPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data } = await supabase
     .from('reservations')
     .select('*')
