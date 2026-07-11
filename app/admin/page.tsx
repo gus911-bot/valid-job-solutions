@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { StatsCards } from '@/components/admin/StatsCards';
 import { AdminTable } from '@/components/admin/AdminTable';
 import { NotificationsToggle } from '@/components/admin/NotificationsToggle';
+import { AutoRefresh } from '@/components/admin/AutoRefresh';
 import type { Reservation } from '@/types';
 
 export const metadata = { title: 'Dashboard' };
@@ -18,6 +19,8 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="container-x space-y-8 py-10">
+      {/* Nouvelles réservations visibles sans rafraîchissement manuel. */}
+      <AutoRefresh />
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-cream">Tableau de bord</h1>
