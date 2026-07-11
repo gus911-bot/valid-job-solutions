@@ -1,0 +1,89 @@
+name: Deploy Staging (Vercel Preview)
+
+# Chaque PR vers main reçoit un déploiement de PRÉVISUALISATION Vercel,
+# puis la suite E2E s'exécute contre l'URL déployée.
+# Secrets requis (Settings → Secrets → Actions) :
+#   VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID
+# Sans ces secrets, le workflow se termine proprement sans déployer.
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: staging-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  deploy-preview:
+    name: Déployer la préversion
+    runs-on: ubuntu-latest
+    outputs:
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - name: Vérifier la présence des secrets Vercel
+        id: gate
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::notice::Secrets Vercel absents — déploiement de préversion sauté."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.skip != 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.gate.outputs.skip != 'true'
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Installer Vercel CLI
+        if: steps.gate.outputs.skip != 'true'
+        run: npm install -g vercel@latest
+
+      - name: Récupérer la config Vercel (environnement preview)
+        if: steps.gate.outputs.skip != 'true'
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Vercel
+        if: steps.gate.outputs.skip != 'true'
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Déployer (préversion)
+        if: steps.gate.outputs.skip != 'true'
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "::notice::Préversion déployée : $url"
+
+  e2e-preview:
+    name: E2E contre la préversion
+    runs-on: ubuntu-latest
+    needs: deploy-preview
+    if: needs.deploy-preview.outputs.url != ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install chromium --with-deps
+      - name: E2E sur l'URL de préversion
+        env:
+          PLAYWRIGHT_TEST_BASE_URL: ${{ needs.deploy-preview.outputs.url }}
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report-preview
+          path: playwright-report/
+          retention-days: 7
