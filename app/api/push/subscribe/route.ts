@@ -5,7 +5,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 // Enregistre un abonnement Web Push — réservé aux administrateurs connectés.
 export async function POST(request: Request) {
   // 1. Vérifier que l'appelant est admin.
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

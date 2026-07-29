@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
+import bundleAnalyzer from '@next/bundle-analyzer';
+
+// Analyse du bundle : ANALYZE=true npm run build (voir script `analyze`).
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 // En-têtes de sécurité appliqués à toutes les routes.
 const securityHeaders = [
@@ -49,4 +55,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);

@@ -5,6 +5,9 @@ import { SERVICE_LABELS } from '@/types';
 export function StatsCards({ reservations }: { reservations: Reservation[] }) {
   const total = reservations.length;
 
+  // Server Component rendu à chaque requête (force-dynamic) : lire l'horloge
+  // ici est voulu. La règle purity vise les composants client re-rendus.
+  // eslint-disable-next-line react-hooks/purity
   const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
   const recent = reservations.filter(
     (r) => new Date(r.created_at).getTime() >= sevenDaysAgo,

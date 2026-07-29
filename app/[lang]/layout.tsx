@@ -13,12 +13,13 @@ export const dynamic = 'force-dynamic';
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
-  params: { lang: string };
-}): Metadata {
-  const lang = isLocale(params.lang) ? params.lang : 'fr';
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang: rawLang } = await params;
+  const lang = isLocale(rawLang) ? rawLang : 'fr';
   // hreflang : indique à Google les versions linguistiques.
   return {
     alternates: {
@@ -36,15 +37,16 @@ export function generateMetadata({
   };
 }
 
-export default function LangLayout({
+export default async function LangLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { lang: string };
+  params: Promise<{ lang: string }>;
 }) {
-  if (!isLocale(params.lang)) notFound();
-  const locale = params.lang as Locale;
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  const locale = lang as Locale;
   const dict = getDictionary(locale);
 
   return (

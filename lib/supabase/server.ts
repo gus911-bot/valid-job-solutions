@@ -4,8 +4,8 @@ import type { Database } from '@/types/database';
 
 // Client Supabase côté serveur (Server Components, Route Handlers, Server Actions).
 // Lit la session depuis les cookies. Utilise la clé anon (RLS appliquée).
-export function createClient() {
-  const cookieStore = cookies();
+export async function createClient() {
+  const cookieStore = await cookies();
 
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

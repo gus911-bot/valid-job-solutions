@@ -29,7 +29,7 @@ export default async function AdminLayout({
   // Ne JAMAIS faire planter le rendu si l'auth échoue (sinon 500 sur /admin/login).
   let email: string | null = null;
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const {
       data: { user },
     } = await supabase.auth.getUser();

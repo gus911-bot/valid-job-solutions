@@ -9,7 +9,7 @@ import type { ReservationStatus } from '@/types';
 
 // Vérifie que l'appelant est bien admin (défense en profondeur, en plus du middleware).
 async function assertAdmin() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -74,7 +74,7 @@ export async function getCvSignedUrl(
 }
 
 export async function signOut() {
-  const supabase = createClient();
+  const supabase = await createClient();
   await supabase.auth.signOut();
   redirect('/admin/login');
 }
