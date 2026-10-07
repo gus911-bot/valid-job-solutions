@@ -33,8 +33,10 @@ export const reservationSchema = z.object({
   preferred_slot: z.enum(['matin', 'apres_midi']).optional().or(z.literal('')),
   // Honeypot anti-spam : rempli par les bots. La validation le laisse passer
   // volontairement — la route répond ensuite un 200 silencieux sans insertion
-  // (un rejet 400 révélerait le piège aux bots).
-  website: z.string().max(200).optional().or(z.literal('')),
+  // (un rejet 400 révélerait le piège aux bots). La borne reste très haute :
+  // un `.max()` bas ferait échouer Zod AVANT la branche silencieuse et
+  // exposerait `fieldErrors.website` dans la réponse 400.
+  website: z.string().max(5000).optional().or(z.literal('')),
 });
 
 export type ReservationInput = z.infer<typeof reservationSchema>;

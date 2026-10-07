@@ -71,6 +71,16 @@ describe('reservationSchema', () => {
     if (parsed.success) expect(parsed.data.website).toBe('spam.com');
   });
 
+  it('laisse passer un honeypot très long (pas de fuite via les erreurs Zod)', () => {
+    // Régression : un `.max()` bas faisait échouer Zod avant la branche
+    // silencieuse, exposant `fieldErrors.website` dans la réponse 400.
+    const parsed = reservationSchema.safeParse({
+      ...validReservation,
+      website: 'https://spam.example/'.padEnd(1500, 'x'),
+    });
+    expect(parsed.success).toBe(true);
+  });
+
   it('accepte les champs optionnels vides', () => {
     expect(
       reservationSchema.safeParse({

@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
 import bundleAnalyzer from '@next/bundle-analyzer';
 
 // Analyse du bundle : ANALYZE=true npm run build (voir script `analyze`).
@@ -38,6 +37,7 @@ const securityHeaders = [
   },
 ];
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   // Sortie autonome pour Docker uniquement. Sur Vercel (build natif), on laisse
