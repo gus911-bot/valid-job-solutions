@@ -41,8 +41,9 @@ export const CONTACT_PHONE_TEL = '+21698735633';
 // ⚠️ Remplacez par l'adresse + les coordonnées exactes de Valid Job Solutions.
 export const AGENCY_ADDRESS =
   'Rue des Chandelles (près de l\'arrondissement Sahloul El Gharbi), Hammam Sousse 4011';
-export const AGENCY_LAT = 35.851267;
-export const AGENCY_LNG = 10.588361;
+// 35°51'04.5"N 10°35'18.0"E
+export const AGENCY_LAT = 35.85125;
+export const AGENCY_LNG = 10.588333;
 
 // Carte Google Maps intégrée via l'endpoint /maps/embed (autorisé en iframe,
 // sans clé API). Le paramètre pb encode le centre (lat/lng) et le zoom.
