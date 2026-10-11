@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Search, ArrowUpDown, Eye } from 'lucide-react';
+import { Search, ArrowUpDown, ChevronRight } from 'lucide-react';
 import { StatusBadge, ServiceBadge } from '@/components/ui/Badge';
 import { Input, Select } from '@/components/ui/Input';
 import { formatDate } from '@/lib/utils';
@@ -15,6 +15,20 @@ import {
 } from '@/types';
 
 type SortDir = 'desc' | 'asc';
+
+function Avatar({ name }: { name: string }) {
+  const initials = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase())
+    .join('');
+  return (
+    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line bg-surface-200 text-xs font-semibold text-cream/80">
+      {initials || '?'}
+    </span>
+  );
+}
 
 export function AdminTable({ reservations }: { reservations: Reservation[] }) {
   const [query, setQuery] = useState('');
@@ -42,9 +56,9 @@ export function AdminTable({ reservations }: { reservations: Reservation[] }) {
   }, [reservations, query, statusFilter, serviceFilter, sortDir]);
 
   return (
-    <div className="rounded-2xl border border-line bg-surface-100 shadow-soft">
+    <div className="overflow-hidden rounded-2xl border border-line bg-surface-100">
       {/* Barre de filtres */}
-      <div className="grid gap-3 border-b border-line p-4 sm:grid-cols-3">
+      <div className="grid gap-3 border-b border-line p-4 sm:grid-cols-[2fr_1fr_1fr]">
         <div className="relative">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
           <Input
@@ -83,10 +97,39 @@ export function AdminTable({ reservations }: { reservations: Reservation[] }) {
         </Select>
       </div>
 
-      {/* Tableau */}
-      <div className="overflow-x-auto">
+      {/* Mobile : liste de cartes */}
+      <ul className="divide-y divide-line md:hidden">
+        {filtered.map((r) => (
+          <li key={r.id}>
+            <Link
+              href={`/admin/${r.id}`}
+              className="flex items-center gap-3 px-4 py-3.5 transition hover:bg-white/[0.03]"
+            >
+              <Avatar name={r.full_name} />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="truncate font-medium text-cream">{r.full_name}</p>
+                  <StatusBadge status={r.status} />
+                </div>
+                <p className="mt-0.5 truncate text-xs text-muted">
+                  {formatDate(r.created_at)} · {SERVICE_LABELS[r.service]}
+                </p>
+              </div>
+              <ChevronRight className="h-4 w-4 shrink-0 text-muted" />
+            </Link>
+          </li>
+        ))}
+        {filtered.length === 0 && (
+          <li className="px-4 py-12 text-center text-sm text-muted">
+            Aucune demande ne correspond aux filtres.
+          </li>
+        )}
+      </ul>
+
+      {/* Desktop : tableau */}
+      <div className="hidden overflow-x-auto md:block">
         <table className="w-full text-left text-sm">
-          <thead className="border-b border-line text-xs uppercase tracking-wider text-muted">
+          <thead className="border-b border-line bg-white/[0.02] text-xs font-medium text-muted">
             <tr>
               <th className="px-4 py-3">
                 <button
@@ -109,14 +152,19 @@ export function AdminTable({ reservations }: { reservations: Reservation[] }) {
             {filtered.map((r) => (
               <tr
                 key={r.id}
-                className="border-b border-line/60 transition hover:bg-surface-200"
+                className="group border-b border-line/60 transition last:border-0 hover:bg-white/[0.03]"
               >
                 <td className="whitespace-nowrap px-4 py-3 text-muted">
                   {formatDate(r.created_at)}
                 </td>
                 <td className="px-4 py-3">
-                  <p className="font-medium text-cream">{r.full_name}</p>
-                  <p className="text-xs text-muted">{r.email}</p>
+                  <div className="flex items-center gap-3">
+                    <Avatar name={r.full_name} />
+                    <div className="min-w-0">
+                      <p className="font-medium text-cream">{r.full_name}</p>
+                      <p className="text-xs text-muted">{r.email}</p>
+                    </div>
+                  </div>
                 </td>
                 <td className="px-4 py-3">
                   <ServiceBadge service={r.service} />
@@ -130,9 +178,9 @@ export function AdminTable({ reservations }: { reservations: Reservation[] }) {
                 <td className="px-4 py-3 text-right">
                   <Link
                     href={`/admin/${r.id}`}
-                    className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-gold-dark hover:bg-gold/10"
+                    className="inline-flex items-center gap-1 rounded-full border border-line px-3 py-1.5 text-xs font-medium text-cream/80 transition group-hover:border-gold/40 group-hover:text-gold"
                   >
-                    <Eye className="h-3.5 w-3.5" /> Détail
+                    Détail <ChevronRight className="h-3.5 w-3.5" />
                   </Link>
                 </td>
               </tr>

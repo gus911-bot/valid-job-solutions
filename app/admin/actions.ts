@@ -9,7 +9,7 @@ import type { ReservationStatus } from '@/types';
 
 // Vérifie que l'appelant est bien admin (défense en profondeur, en plus du middleware).
 async function assertAdmin() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -44,7 +44,10 @@ export async function updateReservation(formData: {
     .update(changes)
     .eq('id', id);
 
-  if (error) return { ok: false, error: error.message };
+  if (error) {
+    console.error('Mise à jour réservation échouée:', error.message);
+    return { ok: false, error: 'Mise à jour impossible.' };
+  }
 
   revalidatePath('/admin');
   revalidatePath(`/admin/${id}`);
@@ -58,7 +61,7 @@ export async function getCvSignedUrl(
 ): Promise<{ ok: true; url: string } | { ok: false; error: string }> {
   await assertAdmin();
 
-  if (!path || path.includes('..')) {
+  if (!/^uploads\/[\w-]+\.(pdf|docx?)$/.test(path)) {
     return { ok: false, error: 'Chemin invalide.' };
   }
 
@@ -68,13 +71,13 @@ export async function getCvSignedUrl(
     .createSignedUrl(path, 60);
 
   if (error || !data) {
-    return { ok: false, error: error?.message ?? 'Fichier introuvable.' };
+    return { ok: false, error: 'Fichier introuvable.' };
   }
   return { ok: true, url: data.signedUrl };
 }
 
 export async function signOut() {
-  const supabase = createClient();
+  const supabase = await createClient();
   await supabase.auth.signOut();
   redirect('/admin/login');
 }

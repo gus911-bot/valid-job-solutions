@@ -1,16 +1,49 @@
+# Dépendances & builds locaux
 node_modules
 .next
+/out
+/build
+
+# Git & config repo
 .git
 .gitignore
+.github
+
+# Docker (n'ont rien à faire dans l'image)
 Dockerfile
 .dockerignore
 docker-compose.yml
+
+# Logs & secrets locaux
 npm-debug.log*
-README.md
 .env
 .env*.local
+.env.migration*
+
+# Editeurs
 .vscode
 .idea
-*.md
-coverage
 .DS_Store
+
+# Docs
+*.md
+LICENSE
+
+# Tests & rapports (jamais utilisés en runtime)
+coverage
+test-results
+playwright-report
+blob-report
+tests
+vitest.config.ts
+playwright.config.ts
+playwright.smoke.config.ts
+
+# Migrations SQL Supabase (appliquées via le dashboard, pas dans l'image)
+supabase
+
+# Artéfacts TS
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+.eslintrc.json
+eslint.config.mjs

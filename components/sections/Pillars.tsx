@@ -22,11 +22,11 @@ export function Pillars({ dict }: { dict: Dictionary }) {
   const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <section className="relative bg-background py-24" ref={ref}>
+    <section className="relative bg-background py-24 sm:py-32" ref={ref}>
       <div className="container-x">
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <div className="gold-rule mx-auto mb-5" />
-          <h2 className="text-gold-shimmer text-3xl font-bold sm:text-4xl">
+          <h2 className="text-3xl font-semibold text-cream sm:text-5xl">
             {dict.pillars.title}
           </h2>
           <p className="mt-4 text-muted">{dict.pillars.subtitle}</p>

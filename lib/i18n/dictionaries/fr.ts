@@ -9,7 +9,7 @@ export const fr = {
     cta: 'Réserver un entretien',
   },
   hero: {
-    badge: 'Tunisie + Europe',
+    badge: 'Tunisie + Europe + Canada',
     title: ['Révélons', 'votre', 'potentiel', 'professionnel'],
     subtitle:
       "Des talents vers des opportunités professionnelles concrètes à l'international. Nous identifions, préparons et propulsons votre carrière.",
@@ -157,6 +157,25 @@ export const fr = {
       coaching_cv: 'Coaching CV & lettre de motivation',
       preparation_entretien: 'Préparation aux entretiens',
       consultation: 'Consultation générale',
+    },
+    payment: {
+      title: 'Finaliser votre paiement',
+      subtitle:
+        "Réglez via l'un de ces moyens, puis envoyez-nous le reçu sur WhatsApp.",
+      holder: 'Titulaire',
+      rib: 'RIB',
+      iban: 'IBAN',
+      number: 'Numéro',
+      copy: 'Copier',
+      copied: 'Copié',
+      note: 'Le montant vous est confirmé par notre équipe selon le service choisi.',
+      whatsapp: 'Envoyer le reçu sur WhatsApp',
+      methods: {
+        biat: 'Virement bancaire — BIAT',
+        wafacash: 'Wafacash',
+        zitouna: 'Izi / Banque Zitouna',
+        d17: 'D17',
+      },
     },
   },
 };

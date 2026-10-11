@@ -14,11 +14,20 @@
   body {
     @apply bg-background text-cream antialiased;
     font-feature-settings: 'ss01', 'cv01';
-    /* Lueurs dorées diffuses en fond, façon « dark luxury ». */
+    /* Grille fine + halo discret en haut : rendu moderne et sobre. */
     background-image:
-      radial-gradient(60rem 40rem at 80% -10%, rgba(212, 160, 76, 0.08), transparent 60%),
-      radial-gradient(50rem 40rem at -10% 20%, rgba(212, 160, 76, 0.05), transparent 55%);
+      radial-gradient(70rem 36rem at 50% -12rem, rgba(96, 140, 220, 0.10), transparent 70%),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 64px 64px, 64px 64px;
     background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight;
+    text-wrap: balance;
   }
 
   ::selection {
@@ -38,9 +47,7 @@
     @apply border border-white/10 bg-ink-900/50 backdrop-blur-2xl;
     -webkit-backdrop-filter: blur(22px) saturate(160%);
     backdrop-filter: blur(22px) saturate(160%);
-    box-shadow:
-      0 18px 50px -18px rgba(0, 0, 0, 0.7),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
   }
 
   .glass-dark {
@@ -49,19 +56,15 @@
 
   /* Filet doré décoratif, dégradé animé. */
   .gold-rule {
-    @apply h-[2px] w-16 rounded-full;
-    background-image: linear-gradient(100deg, #c79a4a, #f2c879, #e8a33d, #c79a4a);
-    background-size: 200% auto;
-    animation: goldShimmer 5s ease-in-out infinite;
+    @apply h-px w-12;
+    background-color: #e0b15e;
   }
 
   /* Texte doré dégradé, brillance animée (accents de titres). */
   .text-gold-gradient,
   .text-gold-shimmer {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(100deg, #c79a4a, #f2c879, #e8a33d, #c79a4a);
-    background-size: 200% auto;
-    animation: goldShimmer 5s ease-in-out infinite;
+    background-image: linear-gradient(180deg, #f3d9a4 0%, #e0b15e 100%);
     /* bg-clip-text peint le dégradé dans la boîte du texte : on étend la boîte
        vers le bas pour ne pas couper les jambages (p, et ة/ي/إ en arabe). */
     display: inline-block;
@@ -69,24 +72,13 @@
     margin-bottom: -0.16em;
   }
 
-  /* Carte « dark luxury » : profondeur, reflet supérieur, lift au survol. */
+  /* Carte : bordure fine, fond plat, lift léger au survol. */
   .card-lux {
     @apply relative rounded-2xl border border-line bg-surface-100 transition-all duration-300;
-    background-image: linear-gradient(
-      160deg,
-      rgba(255, 255, 255, 0.045),
-      rgba(255, 255, 255, 0) 42%
-    );
-    box-shadow:
-      0 18px 50px -22px rgba(0, 0, 0, 0.75),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
   }
   .card-lux:hover {
-    @apply -translate-y-1 border-gold/30;
-    box-shadow:
-      0 28px 64px -20px rgba(0, 0, 0, 0.8),
-      0 0 0 1px rgba(212, 160, 76, 0.18),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    @apply -translate-y-0.5 border-white/15 bg-surface-200;
   }
 
   .container-x {
@@ -110,7 +102,7 @@
   width: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-gold/50 rounded-full;
+  @apply bg-white/15 rounded-full;
 }
 ::-webkit-scrollbar-track {
   @apply bg-transparent;

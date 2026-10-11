@@ -14,24 +14,24 @@ interface ButtonProps extends HTMLMotionProps<'button'> {
 
 const variants: Record<Variant, string> = {
   primary:
-    'bg-gold-gradient text-ink-900 font-semibold shadow-glow hover:brightness-110',
+    'bg-gold-gradient text-ink-900 font-semibold shadow-glow hover:brightness-105',
   outline:
-    'border border-gold/40 text-gold hover:bg-gold/10 hover:border-gold/70 font-semibold',
+    'border border-white/15 text-cream hover:bg-white/5 hover:border-white/30 font-semibold',
   ghost: 'text-cream/80 hover:bg-cream/5 hover:text-cream font-medium',
   dark: 'bg-surface-200 text-cream border border-line hover:bg-surface-300 font-semibold',
 };
 
 const sizes: Record<Size, string> = {
-  sm: 'px-4 py-2 text-sm rounded-lg',
-  md: 'px-6 py-3 text-sm rounded-xl',
-  lg: 'px-8 py-4 text-base rounded-xl',
+  sm: 'px-4 py-2 text-sm rounded-full',
+  md: 'px-5 py-2.5 text-sm rounded-full',
+  lg: 'px-7 py-3.5 text-[15px] rounded-full',
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', ...props }, ref) => (
     <motion.button
       ref={ref}
-      whileHover={{ scale: 1.03 }}
+      whileHover={{ y: -1 }}
       whileTap={{ scale: 0.97 }}
       transition={{ type: 'spring', stiffness: 400, damping: 17 }}
       className={cn(

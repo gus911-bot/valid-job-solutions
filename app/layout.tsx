@@ -41,13 +41,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   // Le middleware fournit la locale courante via l'en-tête x-locale.
-  const headerLocale = headers().get('x-locale') ?? defaultLocale;
+  const headerLocale = (await headers()).get('x-locale') ?? defaultLocale;
   const locale: Locale = isLocale(headerLocale) ? headerLocale : defaultLocale;
 
   return (

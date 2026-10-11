@@ -90,12 +90,10 @@ alter table public.reservations enable row level security;
 alter table public.profiles enable row level security;
 
 -- ── reservations ──
--- Insertion publique (formulaire client anonyme) UNIQUEMENT.
+-- Aucune insertion publique directe : /api/reservations insère via le
+-- service_role après rate limit + validation (voir migration 005).
 drop policy if exists "public_can_insert_reservation" on public.reservations;
-create policy "public_can_insert_reservation"
-  on public.reservations for insert
-  to anon, authenticated
-  with check (true);
+revoke insert on public.reservations from anon, authenticated;
 
 -- Lecture réservée aux admins.
 drop policy if exists "admin_can_select_reservations" on public.reservations;

@@ -10,13 +10,14 @@ export const metadata = { title: 'Détail de la demande' };
 export default async function ReservationDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const supabase = createClient();
+  const { id } = await params;
+  const supabase = await createClient();
   const { data } = await supabase
     .from('reservations')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single();
 
   if (!data) notFound();

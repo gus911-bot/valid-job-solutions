@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, after } from 'next/server';
 import { reservationSchema } from '@/lib/validations/reservation';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { rateLimit, getClientIp } from '@/lib/rate-limit';
+import { sendPushToAll } from '@/lib/push';
 import {
   CV_ACCEPTED,
   CV_MAX_BYTES,
@@ -12,6 +13,9 @@ import {
 import { randomUUID } from 'crypto';
 
 const CV_BUCKET = 'cvs';
+// CV (5 Mo) + champs texte + enveloppe multipart : tout au-delà est rejeté
+// AVANT de bufferiser le corps (formData() charge tout en mémoire).
+const MAX_BODY_BYTES = CV_MAX_BYTES + 256 * 1024 // < 4,5 Mo (limite Vercel);
 
 // Réservation via multipart/form-data (un fichier CV optionnel + champs texte).
 // L'upload Storage et l'INSERT passent par le client service_role (serveur uniquement).
@@ -29,7 +33,21 @@ export async function POST(request: Request) {
     );
   }
 
-  // 2. Parse multipart.
+  // 2. Taille + type annoncés, vérifiés avant toute lecture du corps.
+  // (Content-Length absent = streaming/HTTP2 : la limite de corps de la
+  // plateforme ou du reverse proxy s'applique — voir client_max_body_size.)
+  const declared = Number(request.headers.get('content-length') ?? 0);
+  if (declared > MAX_BODY_BYTES) {
+    return NextResponse.json(
+      { error: `Requête trop volumineuse (max ${CV_MAX_LABEL}).` },
+      { status: 413 },
+    );
+  }
+  if (!request.headers.get('content-type')?.startsWith('multipart/form-data')) {
+    return NextResponse.json({ error: 'Requête invalide.' }, { status: 415 });
+  }
+
+  // 3. Parse multipart.
   let form: FormData;
   try {
     form = await request.formData();
@@ -57,7 +75,7 @@ export async function POST(request: Request) {
   });
   if (!parsed.success) {
     return NextResponse.json(
-      { error: 'Données invalides.', issues: parsed.error.flatten() },
+      { error: 'Données invalides.', issues: parsed.error.flatten().fieldErrors },
       { status: 400 },
     );
   }
@@ -146,6 +164,22 @@ export async function POST(request: Request) {
       { status: 500 },
     );
   }
+
+  // 7. Notifier l'admin (best-effort, ne bloque pas la réponse).
+  const serviceLabels: Record<string, string> = {
+    coaching_cv: 'Coaching CV',
+    preparation_entretien: 'Préparation entretien',
+    consultation: 'Consultation',
+  };
+  after(() =>
+    sendPushToAll({
+    title: 'Nouvelle réservation 🎯',
+    body: `${data.full_name} — ${serviceLabels[data.service] ?? data.service}${
+      data.target_country ? ' · ' + data.target_country : ''
+    }`,
+      url: '/admin',
+    }).catch(() => {}),
+  );
 
   return NextResponse.json({ ok: true }, { status: 201 });
 }

@@ -22,11 +22,11 @@ export function CtaBanner({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative overflow-hidden rounded-3xl border border-gold/20 bg-surface-gradient bg-surface-100 px-8 py-16 text-center shadow-glow"
+          className="relative overflow-hidden rounded-3xl border border-line bg-surface-gradient bg-surface-100 px-8 py-16 text-center"
         >
           <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gold/20 blur-3xl" />
           <div className="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-gold/10 blur-3xl" />
-          <h2 className="relative text-3xl font-bold text-cream sm:text-4xl">
+          <h2 className="relative text-3xl font-semibold text-cream sm:text-5xl">
             {dict.cta.title}
           </h2>
           <p className="relative mx-auto mt-4 max-w-xl text-cream/80">

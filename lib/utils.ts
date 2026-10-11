@@ -34,13 +34,16 @@ export const WHATSAPP_NUMBER = '21623529938';
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 export const CONTACT_EMAIL = 'validjobsolution@gmail.com';
 export const CONTACT_PHONE = '98 735 633';
+// Format international pour les liens tel: (indicatif Tunisie +216).
+export const CONTACT_PHONE_TEL = '+21698735633';
 
 // ───────── Localisation de l'agence ─────────
 // ⚠️ Remplacez par l'adresse + les coordonnées exactes de Valid Job Solutions.
 export const AGENCY_ADDRESS =
   'Rue des Chandelles (près de l\'arrondissement Sahloul El Gharbi), Hammam Sousse 4011';
-export const AGENCY_LAT = 35.851267;
-export const AGENCY_LNG = 10.588361;
+// 35°51'04.5"N 10°35'18.0"E
+export const AGENCY_LAT = 35.85125;
+export const AGENCY_LNG = 10.588333;
 
 // Carte Google Maps intégrée via l'endpoint /maps/embed (autorisé en iframe,
 // sans clé API). Le paramètre pb encode le centre (lat/lng) et le zoom.
@@ -51,5 +54,7 @@ export const AGENCY_MAP_EMBED =
   `!3m3!1m2!1s0x0%3A0x0!2sValid%20Job%20Solutions` +
   `!5e0!3m2!1sfr!2stn!4v1700000000000!5m2!1sfr!2stn`;
 
-// Lien « Itinéraire » (ouvre la navigation Google Maps vers les coordonnées).
+// Fiche Google Business officielle (CID dérivé du place ID).
+export const AGENCY_PLACE_URL = 'https://www.google.com/maps?cid=4335862039483113036';
+// Lien « Itinéraire » : itinéraire Google Maps vers les coordonnées de l'agence.
 export const AGENCY_DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${AGENCY_LAT},${AGENCY_LNG}`;

@@ -10,7 +10,7 @@ export const en: Dictionary = {
     cta: 'Book an interview',
   },
   hero: {
-    badge: 'Tunisia + Europe',
+    badge: 'Tunisia + Europe + Canada',
     title: ['Reveal', 'your', 'professional', 'potential'],
     subtitle:
       'Talent matched to real professional opportunities abroad. We identify, prepare and propel your career.',
@@ -157,6 +157,25 @@ export const en: Dictionary = {
       coaching_cv: 'CV & cover letter coaching',
       preparation_entretien: 'Interview preparation',
       consultation: 'General consultation',
+    },
+    payment: {
+      title: 'Complete your payment',
+      subtitle:
+        'Pay via one of these methods, then send us the receipt on WhatsApp.',
+      holder: 'Account holder',
+      rib: 'RIB',
+      iban: 'IBAN',
+      number: 'Number',
+      copy: 'Copy',
+      copied: 'Copied',
+      note: 'The amount is confirmed by our team based on the chosen service.',
+      whatsapp: 'Send the receipt on WhatsApp',
+      methods: {
+        biat: 'Bank transfer — BIAT',
+        wafacash: 'Wafacash',
+        zitouna: 'Izi / Zitouna Bank',
+        d17: 'D17',
+      },
     },
   },
 };

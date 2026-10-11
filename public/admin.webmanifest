@@ -1,0 +1,18 @@
+{
+  "name": "Valid Job Solutions — Admin",
+  "short_name": "VJ Admin",
+  "description": "Tableau de bord administrateur — Valid Job Solutions",
+  "start_url": "/admin",
+  "scope": "/admin",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0C100E",
+  "theme_color": "#0C100E",
+  "lang": "fr",
+  "dir": "ltr",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

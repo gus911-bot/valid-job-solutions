@@ -1,7 +1,7 @@
 // Constantes et helpers partagés pour l'upload de CV (client + serveur).
 
-export const CV_MAX_BYTES = 5 * 1024 * 1024; // 5 Mo
-export const CV_MAX_LABEL = '5 Mo';
+export const CV_MAX_BYTES = 4 * 1024 * 1024; // 4 Mo (Vercel limite le corps des requêtes à 4,5 Mo)
+export const CV_MAX_LABEL = '4 Mo';
 
 // Types acceptés : PDF, DOC, DOCX.
 export const CV_ACCEPTED = {
