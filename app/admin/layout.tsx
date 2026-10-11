@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   icons: { apple: '/apple-touch-icon.png' },
 };
 
-export const viewport: Viewport = { themeColor: '#0C100E' };
+export const viewport: Viewport = { themeColor: '#111827' };
 
 export default async function AdminLayout({
   children,
@@ -30,10 +30,9 @@ export default async function AdminLayout({
   let email: string | null = null;
   try {
     const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    email = user?.email ?? null;
+    // Lecture locale du JWT (déjà validé par le middleware) : pas d'appel réseau.
+    const { data } = await supabase.auth.getClaims();
+    email = (data?.claims?.email as string | undefined) ?? null;
   } catch (err) {
     console.error('Admin layout auth error:', err);
   }
@@ -43,7 +42,7 @@ export default async function AdminLayout({
     <div className="min-h-screen bg-background">
       <PwaRegister />
       {email && <AdminHeader email={email} />}
-      {children}
+      <div className={email ? 'lg:ps-64' : undefined}>{children}</div>
     </div>
   );
 }

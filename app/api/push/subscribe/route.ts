@@ -28,7 +28,23 @@ export async function POST(request: Request) {
   } catch {
     return NextResponse.json({ error: 'Requête invalide.' }, { status: 400 });
   }
-  if (!sub.endpoint || !sub.keys?.p256dh || !sub.keys?.auth) {
+  // L'endpoint est appelé par le serveur à chaque notification : HTTPS uniquement,
+  // longueurs bornées (pas de SSRF vers http://localhost ou le réseau interne).
+  const isHttps = (() => {
+    try {
+      return new URL(sub.endpoint ?? '').protocol === 'https:';
+    } catch {
+      return false;
+    }
+  })();
+  if (
+    !isHttps ||
+    sub.endpoint!.length > 1000 ||
+    !sub.keys?.p256dh ||
+    !sub.keys?.auth ||
+    sub.keys.p256dh.length > 200 ||
+    sub.keys.auth.length > 100
+  ) {
     return NextResponse.json({ error: 'Abonnement invalide.' }, { status: 400 });
   }
 
@@ -36,7 +52,7 @@ export async function POST(request: Request) {
   const admin = createAdminClient();
   const { error } = await admin.from('push_subscriptions').upsert(
     {
-      endpoint: sub.endpoint,
+      endpoint: sub.endpoint!,
       p256dh: sub.keys.p256dh,
       auth: sub.keys.auth,
     },

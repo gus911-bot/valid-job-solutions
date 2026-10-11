@@ -124,10 +124,12 @@ export function ReservationForm({
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-6 text-center sm:p-8"
+        className="rounded-3xl border border-line bg-surface-100 p-6 text-center sm:p-10"
       >
-        <CheckCircle2 className="mx-auto h-16 w-16 text-emerald-400" />
-        <h2 className="mt-4 text-2xl font-bold text-cream">{t.successTitle}</h2>
+        <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-emerald-400/10 ring-8 ring-emerald-400/5">
+          <CheckCircle2 className="h-8 w-8 text-emerald-400" />
+        </span>
+        <h2 className="mt-5 text-2xl font-semibold tracking-tight text-cream sm:text-3xl">{t.successTitle}</h2>
         <p className="mx-auto mt-2 max-w-md text-muted">{t.successText}</p>
 
         {/* Coordonnées de paiement */}

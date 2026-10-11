@@ -30,20 +30,20 @@ export function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
     >
       {/* Fond image + léger zoom parallax au chargement */}
       <motion.div
-        initial={{ scale: 1.12, opacity: 0.35 }}
-        animate={{ scale: 1, opacity: 0.45 }}
+        initial={{ scale: 1.08, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.6, ease: 'easeOut' }}
         className="absolute inset-0"
       >
         <Image
-          src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1920&q=80"
+          src="/hero.webp"
           alt=""
           fill
           priority
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-ink-gradient/80 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-background/10 rtl:bg-gradient-to-l" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
       </motion.div>
 
       {/* Emblème de marque flottant (côté droit) */}
@@ -67,7 +67,7 @@ export function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-1.5 text-sm text-cream"
+          className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1 text-xs font-medium text-cream/80 backdrop-blur"
         >
           {dict.hero.badge}
         </motion.div>
@@ -76,7 +76,7 @@ export function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           variants={titleContainer}
           initial="hidden"
           animate="show"
-          className="max-w-3xl text-4xl font-bold leading-tight text-cream drop-shadow-[0_2px_16px_rgba(0,0,0,0.55)] sm:text-6xl"
+          className="max-w-3xl text-[2.6rem] font-semibold leading-[1.05] tracking-tight text-cream drop-shadow-[0_2px_16px_rgba(0,0,0,0.55)] sm:text-6xl lg:text-7xl"
         >
           {titleWords.map((w, i) => (
             <span
@@ -98,7 +98,7 @@ export function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="mt-6 max-w-xl text-lg text-cream/80"
+          className="mt-6 max-w-xl text-lg leading-relaxed text-cream/80"
         >
           {dict.hero.subtitle}
         </motion.p>
@@ -115,7 +115,7 @@ export function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
             </Button>
           </Link>
           <Link href={`/${locale}#approche`}>
-            <Button size="lg" variant="outline" className="border-cream/40 text-cream hover:bg-cream/10">
+            <Button size="lg" variant="outline" className="border-white/20 text-cream backdrop-blur hover:border-white/40 hover:bg-white/10">
               <Compass className="h-5 w-5" /> {dict.hero.ctaSecondary}
             </Button>
           </Link>
@@ -125,7 +125,7 @@ export function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.1, duration: 0.8 }}
-          className="mt-12 max-w-md font-script text-xl italic text-gold/90"
+          className="mt-14 max-w-md border-s border-white/20 ps-4 text-sm text-cream/70"
         >
           {dict.hero.quote}
         </motion.p>

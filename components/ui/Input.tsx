@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import { cn } from '@/lib/utils';
 
 const base =
-  'w-full rounded-xl border border-line bg-surface-200 px-4 py-3 text-sm text-cream placeholder:text-muted outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/25 disabled:opacity-60 [color-scheme:dark]';
+  'w-full rounded-xl border border-line bg-surface-200 px-4 py-2.5 text-sm text-cream placeholder:text-muted outline-none transition focus:border-gold/60 focus:ring-4 focus:ring-gold/10 disabled:opacity-60 [color-scheme:dark]';
 
 interface FieldProps {
   label?: string;

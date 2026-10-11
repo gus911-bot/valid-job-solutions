@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -56,7 +57,10 @@ export function LoginForm() {
     }
 
     toast.success('Connexion réussie');
-    const redirect = searchParams.get('redirect') ?? '/admin';
+    // N'accepter qu'un chemin interne à /admin (anti open-redirect :
+    // refuse « https://… », « //evil.com », « /\evil.com »…).
+    const requested = searchParams.get('redirect') ?? '';
+    const redirect = /^\/admin(\/[\w-]*)*$/.test(requested) ? requested : '/admin';
     router.replace(redirect);
     router.refresh();
   };
@@ -64,12 +68,13 @@ export function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full max-w-sm space-y-5 rounded-2xl border border-line bg-surface-100 p-8 shadow-soft"
+      className="w-full max-w-sm space-y-5"
       noValidate
     >
-      <div className="text-center">
-        <h1 className="text-2xl font-bold text-cream">Espace administrateur</h1>
-        <p className="mt-1 text-sm text-muted">Valid Job Solutions</p>
+      <div>
+        <Image src="/nb.png" alt="Valid Job Solutions" width={498} height={501} className="mb-8 h-16 w-auto" />
+        <h1 className="text-3xl font-semibold tracking-tight text-cream">Bon retour 👋</h1>
+        <p className="mt-2 text-sm text-muted">Connectez-vous à l&apos;espace administrateur.</p>
       </div>
 
       {serverError && (

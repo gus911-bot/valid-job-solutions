@@ -21,6 +21,12 @@ vi.mock('@/lib/supabase/admin', () => ({
   }),
 }));
 
+// after() exige un contexte de requête Next : en test, exécution immédiate.
+vi.mock('next/server', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('next/server')>()),
+  after: (task: () => unknown) => void task(),
+}));
+
 vi.mock('@/lib/push', () => ({
   sendPushToAll: sendPushMock,
 }));

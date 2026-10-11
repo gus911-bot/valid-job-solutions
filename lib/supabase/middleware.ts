@@ -32,9 +32,12 @@ export async function updateSession(request: NextRequest) {
       },
     );
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    // getClaims() vérifie la signature du JWT localement (clés JWKS mises en
+    // cache) au lieu d'un aller-retour vers Supabase Auth à chaque requête
+    // comme getUser(). Il rafraîchit aussi la session si le jeton a expiré.
+    // Les écritures (server actions) gardent getUser() : contrôle strict.
+    const { data: claimsData } = await supabase.auth.getClaims();
+    const user = claimsData?.claims?.sub ? { id: claimsData.claims.sub } : null;
 
     if (isAdminArea && !isLoginPage) {
     // Pas connecté → redirection vers le login.

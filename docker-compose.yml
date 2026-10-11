@@ -1,7 +1,8 @@
 # Lancement local de l'image de production.
 #   docker compose up --build
 # Les NEXT_PUBLIC_* sont nécessaires au BUILD (inlinées) ET au runtime.
-# La service_role n'est utilisée qu'au RUNTIME (jamais inlinée côté client).
+# Les secrets (service_role, VAPID privée, Upstash) ne sont utilisés qu'au
+# RUNTIME — jamais en build-arg (ils resteraient dans l'historique de l'image).
 services:
   web:
     build:
@@ -10,6 +11,7 @@ services:
         NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
         NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+        NEXT_PUBLIC_VAPID_PUBLIC_KEY: ${NEXT_PUBLIC_VAPID_PUBLIC_KEY:-}
     ports:
       - '3000:3000'
     environment:
@@ -18,4 +20,18 @@ services:
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
       SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      NEXT_PUBLIC_VAPID_PUBLIC_KEY: ${NEXT_PUBLIC_VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-}
+      UPSTASH_REDIS_REST_URL: ${UPSTASH_REDIS_REST_URL:-}
+      UPSTASH_REDIS_REST_TOKEN: ${UPSTASH_REDIS_REST_TOKEN:-}
+    # Durcissement : système de fichiers en lecture seule (sauf caches),
+    # pas d'escalade de privilèges, ressources bornées.
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /app/.next/cache
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
     restart: unless-stopped

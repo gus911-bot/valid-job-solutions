@@ -4,16 +4,16 @@ import { STATUS_LABELS, SERVICE_LABELS } from '@/types';
 
 // Une couleur distincte par service, cohérente avec la palette or/charbon.
 const serviceStyles: Record<ServiceType, string> = {
-  coaching_cv: 'bg-gold/15 text-gold border-gold/30',
-  preparation_entretien: 'bg-cream/10 text-cream border-cream/20',
-  consultation: 'bg-muted/15 text-muted border-muted/30',
+  coaching_cv: 'bg-gold/10 text-gold border-gold/20',
+  preparation_entretien: 'bg-sky-400/10 text-sky-300 border-sky-400/20',
+  consultation: 'bg-white/5 text-cream/80 border-white/10',
 };
 
 export function ServiceBadge({ service }: { service: ServiceType }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium',
+        'inline-flex items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-medium',
         serviceStyles[service],
       )}
     >
@@ -34,10 +34,11 @@ export function StatusBadge({ status }: { status: ReservationStatus }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium',
+        'inline-flex items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-medium',
         statusStyles[status],
       )}
     >
+      <span className="me-1.5 h-1.5 w-1.5 rounded-full bg-current" />
       {STATUS_LABELS[status]}
     </span>
   );

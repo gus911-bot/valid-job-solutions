@@ -17,7 +17,7 @@ const securityHeaders = [
     value: 'max-age=63072000; includeSubDomains; preload',
   },
   {
-    // CSP de base : autorise Supabase, Unsplash et les inline styles nécessaires à Next/Tailwind.
+    // CSP de base : autorise Supabase, Google Maps et les inline styles nécessaires à Next/Tailwind.
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
@@ -26,7 +26,7 @@ const securityHeaders = [
         ? "script-src 'self' 'unsafe-inline'"
         : "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https://images.unsplash.com https://*.supabase.co https://*.google.com https://*.gstatic.com https://*.googleapis.com https://*.ggpht.com",
+      "img-src 'self' data: blob: https://*.supabase.co https://*.google.com https://*.gstatic.com https://*.googleapis.com https://*.ggpht.com",
       "font-src 'self' data:",
       "connect-src 'self' https://*.supabase.co wss://*.supabase.co",
       "frame-src https://www.google.com https://maps.google.com",
@@ -47,7 +47,6 @@ const nextConfig = {
   compress: true,
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
   },
   async headers() {

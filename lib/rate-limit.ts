@@ -19,6 +19,10 @@ function memoryLimit(
   windowMs: number,
 ): { success: boolean; remaining: number } {
   const now = Date.now();
+  // Purge périodique des compteurs expirés (évite une fuite mémoire).
+  if (store.size > 10_000) {
+    for (const [k, b] of store) if (now > b.resetAt) store.delete(k);
+  }
   const bucket = store.get(id);
   if (!bucket || now > bucket.resetAt) {
     store.set(id, { count: 1, resetAt: now + windowMs });
@@ -68,9 +72,20 @@ export async function rateLimit(
   return memoryLimit(identifier, limit, windowMs);
 }
 
-/** Extrait l'IP cliente depuis les en-têtes de la requête. */
+/**
+ * Extrait l'IP cliente. Le PREMIER élément de X-Forwarded-For est fourni par
+ * le client (falsifiable → contournement du rate limit) : on privilégie
+ * x-real-ip (posé par Vercel / Nginx), puis le DERNIER saut de XFF, ajouté
+ * par notre propre proxy. Derrière plusieurs proxies, ajuster TRUSTED_PROXY_HOPS.
+ */
 export function getClientIp(headers: Headers): string {
+  const realIp = headers.get('x-real-ip');
+  if (realIp) return realIp.trim();
   const forwarded = headers.get('x-forwarded-for');
-  if (forwarded) return forwarded.split(',')[0]!.trim();
-  return headers.get('x-real-ip') ?? 'unknown';
+  if (forwarded) {
+    const hops = forwarded.split(',').map((h) => h.trim()).filter(Boolean);
+    const trusted = Math.max(1, Number(process.env.TRUSTED_PROXY_HOPS ?? 1));
+    return hops[Math.max(0, hops.length - trusted)] ?? 'unknown';
+  }
+  return 'unknown';
 }

@@ -46,7 +46,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
             href={AGENCY_DIRECTIONS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl bg-gold-gradient px-5 py-3 text-sm font-semibold text-ink-900 shadow-glow transition hover:brightness-110"
+            className="inline-flex items-center gap-2 rounded-full bg-gold-gradient px-5 py-3 text-sm font-semibold text-ink-900 shadow-glow transition hover:brightness-110"
           >
             <Navigation className="h-4 w-4" /> {dict.footer.directions}
           </a>
@@ -71,7 +71,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
         {/* Marque */}
         <div className="lg:col-span-2">
           <Logo dark href={`/${locale}`} />
-          <p className="mt-5 max-w-sm font-script text-lg italic text-gold/90">
+          <p className="mt-5 max-w-sm text-sm text-muted">
             {dict.hero.quote}
           </p>
 

@@ -1,6 +1,12 @@
-import { Inbox, Sparkles, BarChart3 } from 'lucide-react';
+import { Inbox, Sparkles, Clock, CheckCircle2 } from 'lucide-react';
 import type { Reservation, ServiceType } from '@/types';
 import { SERVICE_LABELS } from '@/types';
+
+const serviceColors: Record<ServiceType, string> = {
+  coaching_cv: 'bg-gold',
+  preparation_entretien: 'bg-sky-400',
+  consultation: 'bg-slate-400',
+};
 
 export function StatsCards({ reservations }: { reservations: Reservation[] }) {
   const total = reservations.length;
@@ -12,58 +18,65 @@ export function StatsCards({ reservations }: { reservations: Reservation[] }) {
   const recent = reservations.filter(
     (r) => new Date(r.created_at).getTime() >= sevenDaysAgo,
   ).length;
+  const toHandle = reservations.filter(
+    (r) => r.status === 'nouveau' || r.status === 'contacte' || r.status === 'en_cours',
+  ).length;
+  const done = reservations.filter((r) => r.status === 'traite').length;
 
   // Répartition par service.
   const byService = reservations.reduce<Record<string, number>>((acc, r) => {
     acc[r.service] = (acc[r.service] ?? 0) + 1;
     return acc;
   }, {});
-  const maxService = Math.max(1, ...Object.values(byService));
+
+  const kpis = [
+    { label: 'Total demandes', value: total, icon: Inbox, tone: 'text-sky-300 bg-sky-400/10' },
+    { label: 'Nouvelles (7 jours)', value: recent, icon: Sparkles, tone: 'text-gold bg-gold/10' },
+    { label: 'À traiter', value: toHandle, icon: Clock, tone: 'text-amber-300 bg-amber-400/10' },
+    { label: 'Traitées', value: done, icon: CheckCircle2, tone: 'text-emerald-300 bg-emerald-400/10' },
+  ];
 
   return (
-    <div className="grid gap-5 md:grid-cols-3">
-      <div className="card-lux p-6">
-        <div className="flex items-center gap-3">
-          <span className="grid h-11 w-11 place-items-center rounded-xl bg-blue-500/15 text-blue-300">
-            <Inbox className="h-5 w-5" />
-          </span>
-          <span className="text-sm text-muted">Total demandes</span>
-        </div>
-        <p className="mt-4 text-3xl font-bold text-cream">{total}</p>
-      </div>
-
-      <div className="card-lux p-6">
-        <div className="flex items-center gap-3">
-          <span className="grid h-11 w-11 place-items-center rounded-xl bg-gold/10 text-gold-dark">
-            <Sparkles className="h-5 w-5" />
-          </span>
-          <span className="text-sm text-muted">Nouvelles (7 jours)</span>
-        </div>
-        <p className="mt-4 text-3xl font-bold text-cream">{recent}</p>
-      </div>
-
-      <div className="card-lux p-6">
-        <div className="mb-3 flex items-center gap-3">
-          <span className="grid h-11 w-11 place-items-center rounded-xl bg-emerald-500/15 text-emerald-300">
-            <BarChart3 className="h-5 w-5" />
-          </span>
-          <span className="text-sm text-muted">Par service</span>
-        </div>
-        <div className="space-y-2">
-          {(Object.keys(SERVICE_LABELS) as ServiceType[]).map((s) => (
-            <div key={s} className="flex items-center gap-2">
-              <span className="w-24 shrink-0 text-xs text-muted">
-                {SERVICE_LABELS[s]}
+    <div className="space-y-5">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {kpis.map(({ label, value, icon: Icon, tone }) => (
+          <div key={label} className="card-lux p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-muted">{label}</span>
+              <span className={`grid h-8 w-8 place-items-center rounded-lg ${tone}`}>
+                <Icon className="h-4 w-4" />
               </span>
-              <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted/15">
-                <div
-                  className="h-full rounded-full bg-gold-gradient"
-                  style={{
-                    width: `${((byService[s] ?? 0) / maxService) * 100}%`,
-                  }}
-                />
-              </div>
-              <span className="w-6 text-right text-xs font-medium text-cream">
+            </div>
+            <p className="mt-3 text-3xl font-semibold tracking-tight text-cream tabular-nums">
+              {value}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Répartition par service : barre empilée + légende */}
+      <div className="card-lux p-5">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-medium text-cream">Répartition par service</span>
+          <span className="text-xs text-muted">{total} au total</span>
+        </div>
+        <div className="mt-4 flex h-2.5 gap-0.5 overflow-hidden rounded-full bg-white/5">
+          {(Object.keys(SERVICE_LABELS) as ServiceType[]).map((s) =>
+            byService[s] ? (
+              <div
+                key={s}
+                className={serviceColors[s]}
+                style={{ width: `${(byService[s] / total) * 100}%` }}
+              />
+            ) : null,
+          )}
+        </div>
+        <div className="mt-4 grid gap-2 sm:grid-cols-3">
+          {(Object.keys(SERVICE_LABELS) as ServiceType[]).map((s) => (
+            <div key={s} className="flex items-center gap-2 text-sm">
+              <span className={`h-2.5 w-2.5 shrink-0 rounded-sm ${serviceColors[s]}`} />
+              <span className="truncate text-muted">{SERVICE_LABELS[s]}</span>
+              <span className="ms-auto font-medium text-cream tabular-nums">
                 {byService[s] ?? 0}
               </span>
             </div>

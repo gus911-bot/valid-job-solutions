@@ -9,9 +9,9 @@ import type { Dictionary } from '@/lib/i18n/dictionaries';
 const pointIcons = [Heart, Globe2, ShieldCheck];
 
 const images = [
-  'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=800&q=80',
+  '/approach-1.webp',
+  '/approach-2.webp',
+  '/approach-3.webp',
 ];
 
 export function Approach({ dict }: { dict: Dictionary }) {
@@ -25,7 +25,7 @@ export function Approach({ dict }: { dict: Dictionary }) {
         {/* Texte */}
         <Reveal>
           <div className="gold-rule mb-5" />
-          <h2 className="text-gold-shimmer text-3xl font-bold sm:text-4xl">
+          <h2 className="text-3xl font-semibold text-cream sm:text-5xl">
             {dict.approach.title}
           </h2>
           <p className="mt-4 text-muted">{dict.approach.text}</p>

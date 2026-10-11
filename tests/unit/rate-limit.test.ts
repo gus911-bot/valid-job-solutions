@@ -47,11 +47,27 @@ describe('rateLimit (mémoire)', () => {
 });
 
 describe('getClientIp', () => {
-  it('prend la première IP de x-forwarded-for', () => {
+  it('prend le dernier saut de x-forwarded-for (posé par notre proxy)', () => {
     const headers = new Headers({
       'x-forwarded-for': '203.0.113.7, 10.0.0.1',
     });
-    expect(getClientIp(headers)).toBe('203.0.113.7');
+    expect(getClientIp(headers)).toBe('10.0.0.1');
+  });
+
+  it("ignore une IP falsifiée en tête de x-forwarded-for", () => {
+    // Le client envoie « 1.2.3.4 » ; notre proxy ajoute la vraie IP en fin.
+    const headers = new Headers({
+      'x-forwarded-for': '1.2.3.4, 198.51.100.9',
+    });
+    expect(getClientIp(headers)).toBe('198.51.100.9');
+  });
+
+  it('privilégie x-real-ip quand il est présent', () => {
+    const headers = new Headers({
+      'x-forwarded-for': '1.2.3.4',
+      'x-real-ip': '198.51.100.2',
+    });
+    expect(getClientIp(headers)).toBe('198.51.100.2');
   });
 
   it('retombe sur x-real-ip', () => {

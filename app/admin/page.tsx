@@ -20,11 +20,16 @@ export default async function AdminDashboardPage() {
   return (
     <div className="container-x space-y-8 py-10">
       {/* Nouvelles réservations visibles sans rafraîchissement manuel. */}
-      <AutoRefresh />
+      <AutoRefresh intervalMs={60_000} />
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-cream">Tableau de bord</h1>
-          <p className="text-sm text-muted">
+          <p className="text-xs font-medium uppercase tracking-wider text-gold">
+            Vue d&apos;ensemble
+          </p>
+          <h1 className="mt-1 text-3xl font-semibold tracking-tight text-cream">
+            Tableau de bord
+          </h1>
+          <p className="mt-1 text-sm text-muted">
             Gestion des demandes de réservation.
           </p>
         </div>
